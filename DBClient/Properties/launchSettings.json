@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DBClient": {
+      "commandName": "Project"
+    },
+    "Профиль 1": {
+      "commandName": "Project"
+    }
+  }
+}
