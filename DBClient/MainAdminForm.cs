@@ -62,11 +62,21 @@ namespace DBClient
             cbIdRaceMain.Text = "";
             tbTimeNewMain.Clear();
         }
+
         private void ClearTBLoc()
         {
             tbIdLocation.Text = "";
             cbCityLocation.Text = "";
             cbCountryLocation.Text = "";
+        }
+
+        private void ClearTBRace()
+        {
+            tbIdRaces.Text = "";
+            cbTypeRaces.Text = "";
+            tbTitleRaces.Text = "";
+            dtpDateRaces.Text = "";
+            cbIdLocation.Text = "";
         }
 
         private void ReadSingleRow(DataGridView dgw, IDataRecord record)
@@ -103,6 +113,7 @@ ON Races.location_id = Location.Id"
 
         private void MainAdminForm_Load(object sender, EventArgs e)
         {
+            tbPassword.UseSystemPasswordChar = true;
             userInfoMain.Text = "Администратор";
             CreateColumsMain();
             RefreshDataGrid(dgvMainAdmin);
@@ -158,17 +169,6 @@ ON Races.location_id = Location.Id"
         private void btnNewMain_Click(object sender, EventArgs e)
         {
             dataBase.openConnection();
-
-            //var name = tbNameMain.Text;
-            //var surmane = tbSurnameMain.Text;
-            //var sex = cbSexMain.Text;
-            //var classification = cbClassMain.Text;
-            //var type = cbTypeMain.Text;
-            //var title = tbTitleMain.Text;
-            //DateTime date = dtpDateMain.Value;
-            //var time = tbTimeMain;
-            //var country = cbCountryMain.Text;
-            //var city = cbCityMain.Text;
 
             var timeNew = tbTimeNewMain.Text;
             var idDriver = cbIdDriverMain.Text;
@@ -248,7 +248,7 @@ WHERE CONCAT(Drivers.name, Drivers. surname,Drivers.sex, Drivers.classification,
 
             string search = $@" 
 SELECT * FROM Location
-WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
+WHERE CONCAT(Id, city, country) like N'%" + tbSearchMain.Text + "%'";
 
             SqlCommand command = new SqlCommand(search, dataBase.GetSqlConnection());
 
@@ -311,7 +311,7 @@ WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
                         command.ExecuteNonQuery();
                     }
                 }
-                MessageBox.Show("Удалены записи в таблице RacesToDrivers", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Изменения внесены в таблице RacesToDrivers", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch(SqlException ex) 
             {
                 MessageBox.Show("Ошибка ввода", "Изменение бд", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -349,11 +349,11 @@ WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
             }
             if (tcForAdmin.SelectedIndex == 2)
             {
-
+                RefreshDataGridRace(dgvMainRaces);
             }
             if (tcForAdmin.SelectedIndex == 3)
             {
-
+                RefreshDataGridDrivers(dgvMainDrivers);
             }
         }
 
@@ -399,12 +399,33 @@ WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
             }
             if (tcForAdmin.SelectedIndex == 2)
             {
-
+                SearchRace(dgvMainRaces);
             }
             if (tcForAdmin.SelectedIndex == 3)
             {
-
+                SearchDriver(dgvMainDrivers);
             }
+        }
+
+        private void SearchDriver(DataGridView dgvMainDriver)
+        {
+            dgvMainDriver.Rows.Clear();
+
+            string search = $@" 
+SELECT * FROM Drivers
+WHERE CONCAT(Id, name, surname, classification, sex) like N'%" + tbSearchMain.Text + "%'";
+
+            SqlCommand command = new SqlCommand(search, dataBase.GetSqlConnection());
+
+            dataBase.openConnection();
+
+            SqlDataReader read = command.ExecuteReader();
+
+            while (read.Read())
+            {
+                ReadSingleRowDrivers(dgvMainDriver, read);
+            }
+            read.Close();
         }
 
         private void btnDeleteMain_Click(object sender, EventArgs e)
@@ -436,22 +457,28 @@ WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
         {
             if (tcForAdmin.SelectedIndex == 0)
             {
+                dgvMainAdmin.Rows.Clear();
+                dgvMainAdmin.Columns.Clear();
                 CreateColumsMain();
                 RefreshDataGrid(dgvMainAdmin);
-                writeComboBox("Id", "Drivers", cbIdRaceMain);
-                writeComboBox("id_race", "Races", cbIdDriverMain);
+                writeComboBox("Id", "Drivers", cbIdDriverMain);
+                writeComboBox("id_race", "Races", cbIdRaceMain);
                 writeComboBox("classification", "Drivers", cbClassMain);
                 writeComboBox("type", "Races", cbTypeMain);
                 writeComboBox("country", "Location", cbCountryMain);
             }
             if (tcForAdmin.SelectedIndex == 1)
             {
+                dgvLocationMain.Rows.Clear();
+                dgvLocationMain.Columns.Clear();
                 CreateColumsLocation();
                 RefreshDataGridLocation(dgvLocationMain);
                 writeComboBox("country", "Location", cbCountryLocation);
             }
             if (tcForAdmin.SelectedIndex == 2)
             {
+                dgvMainRaces.Rows.Clear();
+                dgvMainRaces.Columns.Clear();
                 CreateColumsRaces();
                 RefreshDataGridRace(dgvMainRaces);
                 writeComboBox("type", "Races", cbTypeRaces);
@@ -459,7 +486,11 @@ WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
             }
             if (tcForAdmin.SelectedIndex == 3)
             {
-
+                dgvMainDrivers.Rows.Clear();
+                dgvMainDrivers.Columns.Clear();
+                CreateColumsDrivers();
+                RefreshDataGridDrivers(dgvMainDrivers);
+                writeComboBox("classification", "Drivers", cbClassDriver);
             }
         }
 
@@ -481,7 +512,17 @@ WHERE CONCAT(city, country) like N'%" + tbSearchMain.Text + "%'";
             dgvMainRaces.Columns.Add("type", "Тип");
             dgvMainRaces.Columns.Add(String.Empty, "IsNew");
             dgvMainRaces.Columns[5].Visible = false;
-            dgvMainAdmin.Columns[3].DefaultCellStyle.Format = "dd.MM.yyyy";
+            dgvMainRaces.Columns[3].DefaultCellStyle.Format = "yyyy.MM.dd";
+        }
+        private void CreateColumsDrivers()
+        {
+            dgvMainDrivers.Columns.Add("id_driver", "ID Автогонщика");
+            dgvMainDrivers.Columns.Add("name", "Имя");
+            dgvMainDrivers.Columns.Add("surname", "Фамилия");
+            dgvMainDrivers.Columns.Add("classification", "Классификация");
+            dgvMainDrivers.Columns.Add("sex", "Пол");
+            dgvMainDrivers.Columns.Add(String.Empty, "IsNew");
+            dgvMainDrivers.Columns[5].Visible = false;
         }
 
         private void ReadSingleRowLocation(DataGridView dgw, IDataRecord record)
@@ -585,12 +626,24 @@ INSERT INTO Location(country, city) VALUES(N'{country}', N'{city}')";
             }
             if (tcForAdmin.SelectedIndex == 2)
             {
-                ClearTB();
+                ClearTBRace();
             }
             if (tcForAdmin.SelectedIndex == 3)
             {
-                ClearTB();
+                ClearTBDriver();
             }
+        }
+
+        private void ClearTBDriver()
+        {
+            tbIdDriver.Text = "";
+            tbNameDriver.Text = "";
+            tbSurnameDriver.Text = "";
+            cbSexDriver.Text = "";
+            lblClassDriver.Text = "";
+
+            tbLogin.Text = "";
+            tbPassword.Text = "";
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -642,7 +695,6 @@ INSERT INTO Location(country, city) VALUES(N'{country}', N'{city}')";
 
                         var command = new SqlCommand(deleteQuery, dataBase.GetSqlConnection());
                         command.ExecuteNonQuery();
-                        MessageBox.Show("Удалены записи в таблице Location", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     if (rowState == RowState.Modified)
                     {
@@ -655,9 +707,9 @@ INSERT INTO Location(country, city) VALUES(N'{country}', N'{city}')";
 
                         var command = new SqlCommand(changeQuery, dataBase.GetSqlConnection());
                         command.ExecuteNonQuery();
-                        MessageBox.Show("Изменены записи в таблице Location", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+                MessageBox.Show($"Изменения внесены в таблице Location", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (SqlException ex)
             {
@@ -752,6 +804,346 @@ INSERT INTO Location(country, city) VALUES(N'{country}', N'{city}')";
             catch (SqlException ex)
             {
                 MessageBox.Show("Такая запись уже существует в Races или введены неверные данные", "Создание записи", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            dataBase.closeConnection();
+        }
+
+        private void btnUpdadeRace_Click(object sender, EventArgs e)
+        {
+            ChangeRace();
+            ClearTBRace();
+        }
+
+        private void btnDeleteRace_Click(object sender, EventArgs e)
+        {
+            DeleteRowRace();
+            ClearTBRace();
+        }
+
+        private void btnSaveRace_Click(object sender, EventArgs e)
+        {
+            UpdateBDRace();
+        }
+
+        private void DeleteRowRace()
+        {
+            int index = dgvMainRaces.CurrentCell.RowIndex;
+
+            dgvMainRaces.Rows[index].Visible = false;
+
+            if (dgvMainRaces.Rows[index].Cells[0].Value.ToString() == string.Empty)
+            {
+                dgvMainRaces.Rows[index].Cells[5].Value = RowState.Deleted;
+            }
+            dgvMainRaces.Rows[index].Cells[5].Value = RowState.Deleted;
+        }
+
+        private void ChangeRace()
+        {
+            var selectedRowIndex = dgvMainRaces.CurrentCell.RowIndex;
+
+            var type = cbTypeRaces.Text;
+            var location_id = cbIdLocation.Text;
+            var date = dtpDateRaces.Value.ToString("yyyy.MM.dd");
+            var title = tbTitleRaces.Text;
+
+            if (dgvMainRaces.Rows[selectedRowIndex].Cells[0].Value.ToString() != string.Empty)
+            {
+                dgvMainRaces.Rows[selectedRowIndex].Cells[1].Value = (title);
+                dgvMainRaces.Rows[selectedRowIndex].Cells[2].Value = (location_id);
+                dgvMainRaces.Rows[selectedRowIndex].Cells[3].Value = (date);
+                dgvMainRaces.Rows[selectedRowIndex].Cells[4].Value = (type);
+                dgvMainRaces.Rows[selectedRowIndex].Cells[5].Value = RowState.Modified;
+            }
+        }
+
+        private void UpdateBDRace()
+        {
+            dataBase.openConnection();
+
+            try
+            {
+                for (int index = 0; index < dgvMainRaces.Rows.Count; index++)
+                {
+                    var rowState = (RowState)dgvMainRaces.Rows[index].Cells[5].Value;
+
+                    if (rowState == RowState.Existed)
+                        continue;
+                    if (rowState == RowState.Deleted)
+                    {
+                        var id = Convert.ToInt32(dgvMainRaces.Rows[index].Cells[0].Value);
+
+                        var deleteQuery = $"DELETE FROM Races WHERE id_race = {id}";
+
+                        var command = new SqlCommand(deleteQuery, dataBase.GetSqlConnection());
+                        command.ExecuteNonQuery();
+                    }
+                    if (rowState == RowState.Modified)
+                    {
+                        var id = dgvMainRaces.Rows[index].Cells[0].Value.ToString();
+                        var title = dgvMainRaces.Rows[index].Cells[1].Value.ToString();
+                        var location_id = dgvMainRaces.Rows[index].Cells[2].Value.ToString();
+                        var date = dgvMainRaces.Rows[index].Cells[3].Value.ToString();
+                        var type = dgvMainRaces.Rows[index].Cells[4].Value.ToString();
+
+                        var changeQuery = $"UPDATE Races set title = N'{title}', location_id = {location_id}, date = '{date}', type = N'{type}' WHERE id_race = {id}";
+
+                        var command = new SqlCommand(changeQuery, dataBase.GetSqlConnection());
+                        command.ExecuteNonQuery();
+                    }
+                }
+                MessageBox.Show($"Изменения внесены в таблице Races", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Ошибка БД", "Изменение бд", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            dataBase.closeConnection();
+        }
+        private void SearchRace(DataGridView dataGridView)
+        {
+            dgvMainRaces.Rows.Clear();
+
+            string search = $@" 
+SELECT * FROM Races
+WHERE CONCAT(id_race, title, location_id, date, type) like N'%" + tbSearchMain.Text + "%'";
+
+            SqlCommand command = new SqlCommand(search, dataBase.GetSqlConnection());
+
+            dataBase.openConnection();
+
+            SqlDataReader read = command.ExecuteReader();
+
+            while (read.Read())
+            {
+                ReadSingleRowRace(dgvMainRaces, read);
+            }
+            read.Close();
+        }
+
+        private void ReadSingleRowDrivers(DataGridView dgw, IDataRecord record)
+        {
+            dgw.Rows.Add(record.GetInt32(0), record.GetString(1), record.GetString(2), record.GetString(3), record.GetString(4), RowState.ModifiedNew);
+        }
+
+        private void RefreshDataGridDrivers(DataGridView dgw)
+        {
+            dgw.Rows.Clear();
+
+            SqlCommand command = new("SELECT * FROM Drivers", dataBase.GetSqlConnection());
+
+            dataBase.openConnection();
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                ReadSingleRowDrivers(dgvMainDrivers, reader);
+            }
+            reader.Close();
+            dataBase.closeConnection();
+        }
+
+        private void dgvMainDrivers_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            selectedRow = e.RowIndex;
+
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dgvMainDrivers.Rows[selectedRow];
+
+                tbIdDriver.Text = row.Cells[0].Value.ToString();
+                tbNameDriver.Text = row.Cells[1].Value.ToString();
+                tbSurnameDriver.Text = row.Cells[2].Value.ToString();
+                cbClassDriver.Text = row.Cells[3].Value.ToString();
+                cbSexDriver.Text = row.Cells[4].Value.ToString();
+
+                var id = Int32.Parse(row.Cells[0].Value.ToString());
+                WriteTbLog(id);
+            }
+        }
+
+        private void WriteTbLog(int id)
+        {
+            dataBase.openConnection();
+            string queryIdDriverLog = $"SELECT login_user, password_user FROM Register WHERE id_driver = {id}";
+            SqlCommand command = new SqlCommand(queryIdDriverLog, dataBase.GetSqlConnection());
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                tbLogin.Text = reader.GetString(0);
+                tbPassword.Text = reader.GetString(1);
+            }
+            reader.Close();
+            dataBase.closeConnection(); ;
+        }
+
+        private void iconHidden_Click(object sender, EventArgs e)
+        {
+            tbPassword.UseSystemPasswordChar = false;
+            iconHidden.Visible = false;
+            iconShow.Visible = true;
+        }
+
+        private void iconShow_Click(object sender, EventArgs e)
+        {
+            tbPassword.UseSystemPasswordChar = true;
+            iconHidden.Visible = true;
+            iconShow.Visible = false;
+        }
+
+        private void btnChangeLog_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Вы точно уверены что хотите поменять данные для входа?", "Изменение", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+
+                var driver_id = tbIdDriver.Text;
+                var login_user = tbLogin.Text.ToString();
+                var password_user = tbPassword.Text.ToString();
+
+                var changeQuery = $"UPDATE Register set login_user = '{login_user}', password_user = '{password_user}' WHERE id_driver = '{driver_id}'";
+
+                var command = new SqlCommand(changeQuery, dataBase.GetSqlConnection());
+
+                dataBase.openConnection();
+                if (login_user != "" && password_user != "")
+                {
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Данные для регистрации изменены", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (SqlException)
+                    {
+                        MessageBox.Show("Такой логин уже занят", "Смена логина", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Заполните поля для авторизации", "Смена логина", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                dataBase.closeConnection();
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+            }
+        }
+
+        private void btnNewDriver_Click(object sender, EventArgs e)
+        {
+            dataBase.openConnection();
+
+            var name = tbNameDriver.Text;
+            var surname = tbSurnameDriver.Text;
+            var classification = cbClassDriver.Text;
+            var sex = cbSexDriver.Text;
+
+
+            var addQuery = $"INSERT INTO Drivers (name, surname, classification, sex) VALUES(N'{name}', N'{surname}', N'{classification}', N'{sex}')";
+
+            var command = new SqlCommand(addQuery, dataBase.GetSqlConnection());
+            try
+            {
+                command.ExecuteNonQuery();
+                MessageBox.Show("Создана запись в таблице Driver", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Введены неверные данные", "Создание записи", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            dataBase.closeConnection();
+        }
+
+        private void btnUpdateDriver_Click(object sender, EventArgs e)
+        {
+            ChangeDriver();
+            ClearTBDriver();
+        }
+
+        private void ChangeDriver()
+        {
+            var selectedRowIndex = dgvMainDrivers.CurrentCell.RowIndex;
+
+            var name = tbNameDriver.Text;
+            var surname = tbSurnameDriver.Text;
+            var classificaion = cbClassDriver.Text;
+            var sex = cbSexDriver.Text;
+
+            if (dgvMainDrivers.Rows[selectedRowIndex].Cells[0].Value.ToString() != string.Empty)
+            {
+                dgvMainDrivers.Rows[selectedRowIndex].Cells[1].Value = (name);
+                dgvMainDrivers.Rows[selectedRowIndex].Cells[2].Value = (surname);
+                dgvMainDrivers.Rows[selectedRowIndex].Cells[3].Value = (classificaion);
+                dgvMainDrivers.Rows[selectedRowIndex].Cells[4].Value = (sex);
+                dgvMainDrivers.Rows[selectedRowIndex].Cells[5].Value = RowState.Modified;
+            }
+        }
+
+        private void btnDeleteDriver_Click(object sender, EventArgs e)
+        {
+            DeleteRowDriver();
+            ClearTBDriver();
+        }
+
+        private void DeleteRowDriver()
+        {
+            int index = dgvMainDrivers.CurrentCell.RowIndex;
+
+            dgvMainDrivers.Rows[index].Visible = false;
+
+            if (dgvMainDrivers.Rows[index].Cells[0].Value.ToString() == string.Empty)
+            {
+                dgvMainDrivers.Rows[index].Cells[5].Value = RowState.Deleted;
+            }
+            dgvMainDrivers.Rows[index].Cells[5].Value = RowState.Deleted;
+        }
+
+        private void btnSaveDriver_Click(object sender, EventArgs e)
+        {
+            UpdateBDDriver();
+        }
+
+        private void UpdateBDDriver()
+        {
+            dataBase.openConnection();
+
+            try
+            {
+                for (int index = 0; index < dgvMainDrivers.Rows.Count; index++)
+                {
+                    var rowState = (RowState)dgvMainDrivers.Rows[index].Cells[5].Value;
+
+                    if (rowState == RowState.Existed)
+                        continue;
+                    if (rowState == RowState.Deleted)
+                    {
+                        var id = Convert.ToInt32(dgvMainDrivers.Rows[index].Cells[0].Value);
+
+                        var deleteQuery = $"DELETE FROM Drivers WHERE Id = {id}";
+
+                        var command = new SqlCommand(deleteQuery, dataBase.GetSqlConnection());
+                        command.ExecuteNonQuery();
+                    }
+                    if (rowState == RowState.Modified)
+                    {
+                        var id = dgvMainDrivers.Rows[index].Cells[0].Value.ToString();
+                        var name = dgvMainDrivers.Rows[index].Cells[1].Value.ToString();
+                        var surname = dgvMainDrivers.Rows[index].Cells[2].Value.ToString();
+                        var classification = dgvMainDrivers.Rows[index].Cells[3].Value.ToString();
+                        var sex = dgvMainDrivers.Rows[index].Cells[4].Value.ToString();
+
+                        var changeQuery = $"UPDATE Drivers set name = N'{name}', surname = N'{surname}', classification = N'{classification}', sex = N'{sex}' WHERE Id = {id}";
+
+                        var command = new SqlCommand(changeQuery, dataBase.GetSqlConnection());
+                        command.ExecuteNonQuery();
+                    }
+                }
+                MessageBox.Show($"Изменения внесены в таблице Drivers", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Ошибка БД", "Изменение бд", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             dataBase.closeConnection();
         }

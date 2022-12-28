@@ -419,6 +419,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.btnGenerationDrivRace);
             this.Name = "GenerateForm";
+            this.Load += new System.EventHandler(this.GenerateForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridMain)).EndInit();
             this.btnGenerationDrivRace.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

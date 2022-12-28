@@ -37,6 +37,28 @@
             this.iconSeachMain = new System.Windows.Forms.PictureBox();
             this.tbSearchMain = new System.Windows.Forms.TextBox();
             this.tpDriver = new System.Windows.Forms.TabPage();
+            this.btnChangeLog = new System.Windows.Forms.Button();
+            this.tbIdDriver = new System.Windows.Forms.TextBox();
+            this.lblIdDriver = new System.Windows.Forms.Label();
+            this.iconHidden = new System.Windows.Forms.PictureBox();
+            this.iconShow = new System.Windows.Forms.PictureBox();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblLogin = new System.Windows.Forms.Label();
+            this.tbLogin = new System.Windows.Forms.TextBox();
+            this.cbClassDriver = new System.Windows.Forms.ComboBox();
+            this.cbSexDriver = new System.Windows.Forms.ComboBox();
+            this.tbNameDriver = new System.Windows.Forms.TextBox();
+            this.lblClassDriver = new System.Windows.Forms.Label();
+            this.lblSexDriver = new System.Windows.Forms.Label();
+            this.lblSurnameDriver = new System.Windows.Forms.Label();
+            this.lblNameDriver = new System.Windows.Forms.Label();
+            this.tbSurnameDriver = new System.Windows.Forms.TextBox();
+            this.btnDeleteDriver = new System.Windows.Forms.Button();
+            this.btnNewDriver = new System.Windows.Forms.Button();
+            this.btnUpdateDriver = new System.Windows.Forms.Button();
+            this.btnSaveDriver = new System.Windows.Forms.Button();
+            this.dgvMainDrivers = new System.Windows.Forms.DataGridView();
             this.tpRaces = new System.Windows.Forms.TabPage();
             this.btnDeleteRace = new System.Windows.Forms.Button();
             this.btnNewRace = new System.Windows.Forms.Button();
@@ -103,6 +125,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconClearMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconRefreshMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSeachMain)).BeginInit();
+            this.tpDriver.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iconHidden)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconShow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMainDrivers)).BeginInit();
             this.tpRaces.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainRaces)).BeginInit();
             this.tpLocation.SuspendLayout();
@@ -209,12 +235,274 @@
             // 
             this.tpDriver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(140)))), ((int)(((byte)(152)))));
             this.tpDriver.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.tpDriver.Controls.Add(this.btnChangeLog);
+            this.tpDriver.Controls.Add(this.tbIdDriver);
+            this.tpDriver.Controls.Add(this.lblIdDriver);
+            this.tpDriver.Controls.Add(this.iconHidden);
+            this.tpDriver.Controls.Add(this.iconShow);
+            this.tpDriver.Controls.Add(this.tbPassword);
+            this.tpDriver.Controls.Add(this.lblPassword);
+            this.tpDriver.Controls.Add(this.lblLogin);
+            this.tpDriver.Controls.Add(this.tbLogin);
+            this.tpDriver.Controls.Add(this.cbClassDriver);
+            this.tpDriver.Controls.Add(this.cbSexDriver);
+            this.tpDriver.Controls.Add(this.tbNameDriver);
+            this.tpDriver.Controls.Add(this.lblClassDriver);
+            this.tpDriver.Controls.Add(this.lblSexDriver);
+            this.tpDriver.Controls.Add(this.lblSurnameDriver);
+            this.tpDriver.Controls.Add(this.lblNameDriver);
+            this.tpDriver.Controls.Add(this.tbSurnameDriver);
+            this.tpDriver.Controls.Add(this.btnDeleteDriver);
+            this.tpDriver.Controls.Add(this.btnNewDriver);
+            this.tpDriver.Controls.Add(this.btnUpdateDriver);
+            this.tpDriver.Controls.Add(this.btnSaveDriver);
+            this.tpDriver.Controls.Add(this.dgvMainDrivers);
             this.tpDriver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
             this.tpDriver.Location = new System.Drawing.Point(4, 24);
             this.tpDriver.Name = "tpDriver";
             this.tpDriver.Size = new System.Drawing.Size(964, 684);
             this.tpDriver.TabIndex = 3;
             this.tpDriver.Text = "Автогонщики";
+            // 
+            // btnChangeLog
+            // 
+            this.btnChangeLog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnChangeLog.Location = new System.Drawing.Point(415, 614);
+            this.btnChangeLog.Name = "btnChangeLog";
+            this.btnChangeLog.Size = new System.Drawing.Size(144, 52);
+            this.btnChangeLog.TabIndex = 57;
+            this.btnChangeLog.Text = "Изменить данные для авторизации";
+            this.btnChangeLog.UseVisualStyleBackColor = true;
+            this.btnChangeLog.Click += new System.EventHandler(this.btnChangeLog_Click);
+            // 
+            // tbIdDriver
+            // 
+            this.tbIdDriver.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbIdDriver.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbIdDriver.Enabled = false;
+            this.tbIdDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbIdDriver.Location = new System.Drawing.Point(210, 338);
+            this.tbIdDriver.Name = "tbIdDriver";
+            this.tbIdDriver.Size = new System.Drawing.Size(253, 23);
+            this.tbIdDriver.TabIndex = 56;
+            // 
+            // lblIdDriver
+            // 
+            this.lblIdDriver.AutoSize = true;
+            this.lblIdDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblIdDriver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblIdDriver.Location = new System.Drawing.Point(19, 338);
+            this.lblIdDriver.Name = "lblIdDriver";
+            this.lblIdDriver.Size = new System.Drawing.Size(114, 23);
+            this.lblIdDriver.TabIndex = 55;
+            this.lblIdDriver.Text = "ID водителя:";
+            // 
+            // iconHidden
+            // 
+            this.iconHidden.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.iconHidden.Image = ((System.Drawing.Image)(resources.GetObject("iconHidden.Image")));
+            this.iconHidden.Location = new System.Drawing.Point(362, 643);
+            this.iconHidden.Name = "iconHidden";
+            this.iconHidden.Size = new System.Drawing.Size(40, 23);
+            this.iconHidden.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconHidden.TabIndex = 53;
+            this.iconHidden.TabStop = false;
+            this.iconHidden.Click += new System.EventHandler(this.iconHidden_Click);
+            // 
+            // iconShow
+            // 
+            this.iconShow.Image = ((System.Drawing.Image)(resources.GetObject("iconShow.Image")));
+            this.iconShow.Location = new System.Drawing.Point(362, 643);
+            this.iconShow.Name = "iconShow";
+            this.iconShow.Size = new System.Drawing.Size(40, 23);
+            this.iconShow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.iconShow.TabIndex = 54;
+            this.iconShow.TabStop = false;
+            this.iconShow.Click += new System.EventHandler(this.iconShow_Click);
+            // 
+            // tbPassword
+            // 
+            this.tbPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbPassword.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbPassword.Location = new System.Drawing.Point(103, 643);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(253, 23);
+            this.tbPassword.TabIndex = 52;
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblPassword.Location = new System.Drawing.Point(19, 643);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(78, 23);
+            this.lblPassword.TabIndex = 51;
+            this.lblPassword.Text = "Пароль:";
+            // 
+            // lblLogin
+            // 
+            this.lblLogin.AutoSize = true;
+            this.lblLogin.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblLogin.Location = new System.Drawing.Point(19, 614);
+            this.lblLogin.Name = "lblLogin";
+            this.lblLogin.Size = new System.Drawing.Size(66, 23);
+            this.lblLogin.TabIndex = 50;
+            this.lblLogin.Text = "Логин:";
+            // 
+            // tbLogin
+            // 
+            this.tbLogin.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbLogin.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbLogin.Location = new System.Drawing.Point(104, 614);
+            this.tbLogin.Name = "tbLogin";
+            this.tbLogin.Size = new System.Drawing.Size(253, 23);
+            this.tbLogin.TabIndex = 49;
+            // 
+            // cbClassDriver
+            // 
+            this.cbClassDriver.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbClassDriver.Font = new System.Drawing.Font("SF Pro Display", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cbClassDriver.FormattingEnabled = true;
+            this.cbClassDriver.Location = new System.Drawing.Point(210, 459);
+            this.cbClassDriver.Name = "cbClassDriver";
+            this.cbClassDriver.Size = new System.Drawing.Size(253, 27);
+            this.cbClassDriver.TabIndex = 48;
+            // 
+            // cbSexDriver
+            // 
+            this.cbSexDriver.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSexDriver.Font = new System.Drawing.Font("SF Pro Display", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cbSexDriver.FormattingEnabled = true;
+            this.cbSexDriver.Items.AddRange(new object[] {
+            "М",
+            "Ж"});
+            this.cbSexDriver.Location = new System.Drawing.Point(210, 426);
+            this.cbSexDriver.Name = "cbSexDriver";
+            this.cbSexDriver.Size = new System.Drawing.Size(253, 27);
+            this.cbSexDriver.TabIndex = 47;
+            // 
+            // tbNameDriver
+            // 
+            this.tbNameDriver.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tbNameDriver.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbNameDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbNameDriver.Location = new System.Drawing.Point(210, 367);
+            this.tbNameDriver.Name = "tbNameDriver";
+            this.tbNameDriver.Size = new System.Drawing.Size(253, 23);
+            this.tbNameDriver.TabIndex = 40;
+            // 
+            // lblClassDriver
+            // 
+            this.lblClassDriver.AutoSize = true;
+            this.lblClassDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblClassDriver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblClassDriver.Location = new System.Drawing.Point(19, 459);
+            this.lblClassDriver.Name = "lblClassDriver";
+            this.lblClassDriver.Size = new System.Drawing.Size(149, 23);
+            this.lblClassDriver.TabIndex = 44;
+            this.lblClassDriver.Text = "Классификация:";
+            // 
+            // lblSexDriver
+            // 
+            this.lblSexDriver.AutoSize = true;
+            this.lblSexDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblSexDriver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblSexDriver.Location = new System.Drawing.Point(19, 426);
+            this.lblSexDriver.Name = "lblSexDriver";
+            this.lblSexDriver.Size = new System.Drawing.Size(130, 23);
+            this.lblSexDriver.TabIndex = 42;
+            this.lblSexDriver.Text = "Пол водителя:";
+            // 
+            // lblSurnameDriver
+            // 
+            this.lblSurnameDriver.AutoSize = true;
+            this.lblSurnameDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblSurnameDriver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblSurnameDriver.Location = new System.Drawing.Point(19, 397);
+            this.lblSurnameDriver.Name = "lblSurnameDriver";
+            this.lblSurnameDriver.Size = new System.Drawing.Size(174, 23);
+            this.lblSurnameDriver.TabIndex = 41;
+            this.lblSurnameDriver.Text = "Фамилия водителя:";
+            // 
+            // lblNameDriver
+            // 
+            this.lblNameDriver.AutoSize = true;
+            this.lblNameDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblNameDriver.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(59)))));
+            this.lblNameDriver.Location = new System.Drawing.Point(19, 368);
+            this.lblNameDriver.Name = "lblNameDriver";
+            this.lblNameDriver.Size = new System.Drawing.Size(132, 23);
+            this.lblNameDriver.TabIndex = 37;
+            this.lblNameDriver.Text = "Имя водителя:";
+            // 
+            // tbSurnameDriver
+            // 
+            this.tbSurnameDriver.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbSurnameDriver.Font = new System.Drawing.Font("SF Pro Display", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbSurnameDriver.Location = new System.Drawing.Point(210, 397);
+            this.tbSurnameDriver.Name = "tbSurnameDriver";
+            this.tbSurnameDriver.Size = new System.Drawing.Size(253, 23);
+            this.tbSurnameDriver.TabIndex = 39;
+            // 
+            // btnDeleteDriver
+            // 
+            this.btnDeleteDriver.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDeleteDriver.Location = new System.Drawing.Point(721, 585);
+            this.btnDeleteDriver.Name = "btnDeleteDriver";
+            this.btnDeleteDriver.Size = new System.Drawing.Size(240, 40);
+            this.btnDeleteDriver.TabIndex = 43;
+            this.btnDeleteDriver.Text = "Удалить";
+            this.btnDeleteDriver.UseVisualStyleBackColor = true;
+            this.btnDeleteDriver.Click += new System.EventHandler(this.btnDeleteDriver_Click);
+            // 
+            // btnNewDriver
+            // 
+            this.btnNewDriver.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNewDriver.Location = new System.Drawing.Point(721, 308);
+            this.btnNewDriver.Name = "btnNewDriver";
+            this.btnNewDriver.Size = new System.Drawing.Size(240, 40);
+            this.btnNewDriver.TabIndex = 45;
+            this.btnNewDriver.Text = "Новая запись";
+            this.btnNewDriver.UseVisualStyleBackColor = true;
+            this.btnNewDriver.Click += new System.EventHandler(this.btnNewDriver_Click);
+            // 
+            // btnUpdateDriver
+            // 
+            this.btnUpdateDriver.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnUpdateDriver.Location = new System.Drawing.Point(721, 354);
+            this.btnUpdateDriver.Name = "btnUpdateDriver";
+            this.btnUpdateDriver.Size = new System.Drawing.Size(240, 40);
+            this.btnUpdateDriver.TabIndex = 46;
+            this.btnUpdateDriver.Text = "Редактировать";
+            this.btnUpdateDriver.UseVisualStyleBackColor = true;
+            this.btnUpdateDriver.Click += new System.EventHandler(this.btnUpdateDriver_Click);
+            // 
+            // btnSaveDriver
+            // 
+            this.btnSaveDriver.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSaveDriver.Location = new System.Drawing.Point(721, 631);
+            this.btnSaveDriver.Name = "btnSaveDriver";
+            this.btnSaveDriver.Size = new System.Drawing.Size(240, 50);
+            this.btnSaveDriver.TabIndex = 38;
+            this.btnSaveDriver.Text = "Сохранить";
+            this.btnSaveDriver.UseVisualStyleBackColor = true;
+            this.btnSaveDriver.Click += new System.EventHandler(this.btnSaveDriver_Click);
+            // 
+            // dgvMainDrivers
+            // 
+            this.dgvMainDrivers.AllowUserToAddRows = false;
+            this.dgvMainDrivers.AllowUserToDeleteRows = false;
+            this.dgvMainDrivers.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(140)))), ((int)(((byte)(152)))));
+            this.dgvMainDrivers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMainDrivers.Location = new System.Drawing.Point(0, 0);
+            this.dgvMainDrivers.Name = "dgvMainDrivers";
+            this.dgvMainDrivers.ReadOnly = true;
+            this.dgvMainDrivers.RowTemplate.Height = 25;
+            this.dgvMainDrivers.Size = new System.Drawing.Size(965, 302);
+            this.dgvMainDrivers.TabIndex = 3;
+            this.dgvMainDrivers.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMainDrivers_CellClick);
             // 
             // tpRaces
             // 
@@ -251,6 +539,7 @@
             this.btnDeleteRace.TabIndex = 49;
             this.btnDeleteRace.Text = "Удалить";
             this.btnDeleteRace.UseVisualStyleBackColor = true;
+            this.btnDeleteRace.Click += new System.EventHandler(this.btnDeleteRace_Click);
             // 
             // btnNewRace
             // 
@@ -272,6 +561,7 @@
             this.btnUpdadeRace.TabIndex = 51;
             this.btnUpdadeRace.Text = "Редактировать";
             this.btnUpdadeRace.UseVisualStyleBackColor = true;
+            this.btnUpdadeRace.Click += new System.EventHandler(this.btnUpdadeRace_Click);
             // 
             // btnSaveRace
             // 
@@ -282,6 +572,7 @@
             this.btnSaveRace.TabIndex = 48;
             this.btnSaveRace.Text = "Сохранить";
             this.btnSaveRace.UseVisualStyleBackColor = true;
+            this.btnSaveRace.Click += new System.EventHandler(this.btnSaveRace_Click);
             // 
             // cbIdLocation
             // 
@@ -335,6 +626,7 @@
             // 
             // cbTypeRaces
             // 
+            this.cbTypeRaces.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypeRaces.Font = new System.Drawing.Font("SF Pro Display", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbTypeRaces.FormattingEnabled = true;
             this.cbTypeRaces.Location = new System.Drawing.Point(209, 367);
@@ -964,6 +1256,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.iconClearMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconRefreshMain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iconSeachMain)).EndInit();
+            this.tpDriver.ResumeLayout(false);
+            this.tpDriver.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iconHidden)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconShow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvMainDrivers)).EndInit();
             this.tpRaces.ResumeLayout(false);
             this.tpRaces.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMainRaces)).EndInit();
@@ -1051,5 +1348,27 @@
         private TextBox tbSurnameMain;
         private Button btnSaveMain;
         private TabControl tcForAdmin;
+        private DataGridView dgvMainDrivers;
+        private ComboBox cbClassDriver;
+        private ComboBox cbSexDriver;
+        private TextBox tbNameDriver;
+        private Label lblClassDriver;
+        private Label lblSexDriver;
+        private Label lblSurnameDriver;
+        private Label lblNameDriver;
+        private TextBox tbSurnameDriver;
+        private Button btnDeleteDriver;
+        private Button btnNewDriver;
+        private Button btnUpdateDriver;
+        private Button btnSaveDriver;
+        private TextBox tbPassword;
+        private Label lblPassword;
+        private Label lblLogin;
+        private TextBox tbLogin;
+        private PictureBox iconHidden;
+        private PictureBox iconShow;
+        private TextBox tbIdDriver;
+        private Label lblIdDriver;
+        private Button btnChangeLog;
     }
 }

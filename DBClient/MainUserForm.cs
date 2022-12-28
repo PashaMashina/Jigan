@@ -194,7 +194,7 @@ WHERE Drivers.Id = {id}"
 
         private void btnChangeAuth_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Вы точно уверены что хотите пометь данные для входа?", "Изменение", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Вы точно уверены что хотите поменять данные для входа?", "Изменение", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
 

@@ -115,7 +115,6 @@ namespace DBClient
         Random random = new();
         private Word[] names;
         private Word[] surnames;
-        private Word[] locationRaces;
         private Word[] titleRaces;
 
         private string GenerateDriverName(string gender)
@@ -386,6 +385,11 @@ END"
 , connection);
                 command.ExecuteNonQuery();
             }
+        }
+
+        private void GenerateForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
